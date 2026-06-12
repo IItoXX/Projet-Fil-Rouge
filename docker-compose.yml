@@ -143,6 +143,17 @@ services:
     networks:
       - flapazon-net
 
+  frontend:
+    build: ./front
+    container_name: flapazon-frontend
+    restart: unless-stopped
+    depends_on:
+      - gateway
+    ports:
+      - "4200:80"
+    networks:
+      - flapazon-net
+
 volumes:
   postgres-data:
   mongo-data:
