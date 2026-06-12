@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { json } from 'express';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { createProxyMiddleware } from 'http-proxy-middleware';
@@ -30,6 +31,8 @@ async function demarrer()
         }
         suite();
     });
+
+    application.use('/evenements', json());
 
     const services = [
         { prefixe: '/auth', cible: process.env.AUTH_URL ?? 'http://localhost:3001' },

@@ -115,6 +115,7 @@ services:
       INTERNAL_TOKEN: ${INTERNAL_TOKEN}
       PRODUCTS_URL: http://products-service:3002
       STOCKS_URL: http://stocks-service:3003
+      GATEWAY_URL: http://gateway:3000
     ports:
       - "${ORDERS_PORT}:3004"
     networks:
@@ -132,6 +133,7 @@ services:
     environment:
       GATEWAY_PORT: 3000
       FRONTEND_URL: ${FRONTEND_URL}
+      INTERNAL_TOKEN: ${INTERNAL_TOKEN}
       AUTH_URL: http://auth-service:3001
       PRODUCTS_URL: http://products-service:3002
       STOCKS_URL: http://stocks-service:3003

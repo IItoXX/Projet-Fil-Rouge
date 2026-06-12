@@ -6,6 +6,7 @@ import { StatutCommande } from './statut-commande.enum';
 import { CreerCommandeDto } from './dto/creer-commande.dto';
 import { ProduitsClient } from '../clients/produits.client';
 import { StocksClient } from '../clients/stocks.client';
+import { EvenementsClient } from '../clients/evenements.client';
 import { RoleUtilisateur } from '../securite/role.enum';
 
 interface LignePreparee
@@ -23,6 +24,7 @@ export class CommandesService
         @InjectRepository(Commande) private readonly depot: Repository<Commande>,
         private readonly produitsClient: ProduitsClient,
         private readonly stocksClient: StocksClient,
+        private readonly evenementsClient: EvenementsClient,
     )
     {
     }
@@ -67,7 +69,9 @@ export class CommandesService
             total,
             lignes,
         });
-        return this.depot.save(commande);
+        const enregistree = await this.depot.save(commande);
+        await this.evenementsClient.publier('commande.validee', { commandeId: enregistree.id, clientId, total });
+        return enregistree;
     }
 
     async lister(clientId: string, role: RoleUtilisateur): Promise<Commande[]>
@@ -105,6 +109,8 @@ export class CommandesService
             await this.stocksClient.incrementer(ligne.produitId, ligne.magasinId, ligne.quantite);
         }
         commande.statut = StatutCommande.ANNULEE;
-        return this.depot.save(commande);
+        const enregistree = await this.depot.save(commande);
+        await this.evenementsClient.publier('commande.annulee', { commandeId: enregistree.id });
+        return enregistree;
     }
 }
