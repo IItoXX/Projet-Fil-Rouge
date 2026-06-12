@@ -97,6 +97,29 @@ services:
     networks:
       - flapazon-net
 
+  orders-service:
+    build: ./backend/orders-service
+    container_name: flapazon-orders
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ORDERS_PORT: 3004
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: flapazon_orders
+      JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_TOKEN: ${INTERNAL_TOKEN}
+      PRODUCTS_URL: http://products-service:3002
+      STOCKS_URL: http://stocks-service:3003
+    ports:
+      - "${ORDERS_PORT}:3004"
+    networks:
+      - flapazon-net
+
 volumes:
   postgres-data:
   mongo-data:
