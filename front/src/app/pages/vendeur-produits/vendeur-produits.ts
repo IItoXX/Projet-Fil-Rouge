@@ -24,33 +24,41 @@ import { Produit } from '../../core/modeles';
     <mat-form-field appearance="outline"><mat-label>Catégorie</mat-label><input matInput name="categorie" [(ngModel)]="nouveau.categorie" required></mat-form-field>
     <mat-form-field appearance="outline"><mat-label>Prix (€)</mat-label><input matInput type="number" name="prix" [(ngModel)]="nouveau.prix" required></mat-form-field>
     <mat-form-field appearance="outline" class="large"><mat-label>Description</mat-label><input matInput name="description" [(ngModel)]="nouveau.description"></mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Ajouter</button>
+    <button mat-flat-button color="primary" type="submit">Ajouter le produit</button>
   </form>
 </mat-card>
 
-<h2>Mes produits</h2>
+<h2 class="titre-liste">Mes produits</h2>
 @if (produits().length === 0)
 {
-  <p>Vous n'avez pas encore de produit.</p>
+  <p class="vide">Vous n'avez pas encore de produit.</p>
 }
 @for (produit of produits(); track produit._id)
 {
   <mat-card class="ligne-produit">
     <span class="nom">{{ produit.nom }}</span>
     <span class="prix">{{ produit.prix }} €</span>
-    <span class="stock">Stock : {{ stockDe(produit._id) }}</span>
+    <span class="stock">Stock actuel : {{ stockDe(produit._id) }}</span>
     <input type="number" min="0" [(ngModel)]="quantites[produit._id]" class="qte" placeholder="Qté">
-    <button mat-stroked-button (click)="definirStock(produit._id)">Maj stock</button>
-    <button mat-icon-button color="warn" (click)="supprimer(produit._id)"><mat-icon>delete</mat-icon></button>
+    <button mat-stroked-button (click)="definirStock(produit._id)">Mettre à jour</button>
+    <button mat-icon-button (click)="supprimer(produit._id)"><mat-icon>delete_outline</mat-icon></button>
   </mat-card>
 }`,
     styles: [`
-.formulaire { padding: 16px; margin-bottom: 24px; }
-.formulaire form { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+h1 { margin-bottom: 20px; }
+h2 { font-size: 1.15rem; }
+.titre-liste { margin: 30px 0 14px; }
+.formulaire { padding: 24px; }
+.formulaire h2 { margin-top: 0; margin-bottom: 16px; }
+.formulaire form { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.formulaire mat-form-field { flex: 1 1 200px; }
 .formulaire .large { flex: 1 1 100%; }
-.ligne-produit { display: flex; align-items: center; gap: 16px; padding: 10px 16px; margin-bottom: 8px; }
+.ligne-produit { display: flex; align-items: center; gap: 16px; padding: 14px 18px; margin-bottom: 10px; }
 .ligne-produit .nom { flex: 1 1 auto; font-weight: 600; }
-.qte { width: 70px; }
+.ligne-produit .prix { font-weight: 700; min-width: 70px; }
+.ligne-produit .stock { color: var(--texte-doux); font-size: .9rem; }
+.qte { width: 80px; padding: 7px 8px; border: 1px solid var(--bordure); border-radius: 8px; font: inherit; }
+.vide { color: var(--texte-doux); }
 `],
 })
 export class VendeurProduits implements OnInit

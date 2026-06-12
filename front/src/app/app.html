@@ -1,23 +1,29 @@
-<mat-toolbar color="primary">
-  <a routerLink="/catalogue" class="marque">Flapazon</a>
+<mat-toolbar class="barre">
+  <a routerLink="/catalogue" class="marque">Flapazon<span class="point">.</span></a>
+  <nav class="liens">
+    <a routerLink="/catalogue" routerLinkActive="actif">Catalogue</a>
+    @if (authService.estConnecte())
+    {
+      @if (estVendeur())
+      {
+        <a routerLink="/vendeur" routerLinkActive="actif">Mon magasin</a>
+      }
+      <a routerLink="/mes-commandes" routerLinkActive="actif">Mes commandes</a>
+    }
+  </nav>
   <span class="espace"></span>
-  <a mat-button routerLink="/catalogue">Catalogue</a>
   @if (authService.estConnecte())
   {
-    @if (estVendeur())
-    {
-      <a mat-button routerLink="/vendeur">Mon magasin</a>
-    }
-    <a mat-button routerLink="/mes-commandes">Mes commandes</a>
-    <a mat-icon-button routerLink="/panier" [matBadge]="panierService.nombre()" [matBadgeHidden]="panierService.nombre() === 0" matBadgeColor="accent">
+    <a mat-icon-button routerLink="/panier" [matBadge]="panierService.nombre()" [matBadgeHidden]="panierService.nombre() === 0">
       <mat-icon>shopping_cart</mat-icon>
     </a>
-    <button mat-button (click)="deconnexion()">Déconnexion</button>
+    <span class="bonjour">{{ authService.utilisateur()?.nom }}</span>
+    <button mat-stroked-button class="bouton-sortie" (click)="deconnexion()">Déconnexion</button>
   }
   @else
   {
     <a mat-button routerLink="/connexion">Connexion</a>
-    <a mat-button routerLink="/inscription">Inscription</a>
+    <a mat-flat-button class="bouton-inscription" routerLink="/inscription">Créer un compte</a>
   }
 </mat-toolbar>
 

@@ -1,9 +1,60 @@
+.barre
+{
+    background: var(--header) !important;
+    color: #fff !important;
+    box-shadow: none;
+    border-bottom: 1px solid rgba(255, 255, 255, .07);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: 60px;
+    padding: 0 24px;
+    gap: 8px;
+}
+
 .marque
 {
-    font-size: 1.4rem;
-    font-weight: 700;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    color: #fff;
+    margin-right: 28px;
+}
+
+.marque:hover
+{
     text-decoration: none;
-    color: inherit;
+}
+
+.point
+{
+    color: var(--accent);
+}
+
+.liens
+{
+    display: flex;
+    gap: 4px;
+}
+
+.liens a
+{
+    color: rgba(255, 255, 255, .72);
+    font-size: .92rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.liens a:hover
+{
+    color: #fff;
+    background: rgba(255, 255, 255, .07);
+    text-decoration: none;
+}
+
+.liens a.actif
+{
+    color: #fff;
 }
 
 .espace
@@ -11,9 +62,34 @@
     flex: 1 1 auto;
 }
 
+.bonjour
+{
+    margin: 0 6px 0 10px;
+    color: rgba(255, 255, 255, .7);
+    font-size: .9rem;
+}
+
+.barre .mat-icon-button,
+.barre mat-icon
+{
+    color: #fff;
+}
+
+.bouton-sortie
+{
+    color: #fff !important;
+    border-color: rgba(255, 255, 255, .3) !important;
+}
+
+.bouton-inscription
+{
+    background: var(--accent) !important;
+    color: #fff !important;
+}
+
 .contenu
 {
-    max-width: 1100px;
+    max-width: 1180px;
     margin: 0 auto;
-    padding: 24px 16px;
+    padding: 36px 24px 64px;
 }

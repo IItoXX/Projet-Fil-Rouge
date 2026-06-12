@@ -13,6 +13,7 @@ import { AuthService } from '../../core/auth.service';
     template: `
 <mat-card class="carte-auth">
   <h1>Connexion</h1>
+  <p class="sous-titre">Accédez à votre compte Flapazon.</p>
   <form (ngSubmit)="valider()">
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
@@ -26,15 +27,18 @@ import { AuthService } from '../../core/auth.service';
     {
       <p class="erreur">{{ erreur() }}</p>
     }
-    <button mat-raised-button color="primary" type="submit">Se connecter</button>
+    <button mat-flat-button color="primary" type="submit">Se connecter</button>
   </form>
-  <p class="lien">Pas encore de compte ? <a routerLink="/inscription">Inscription</a></p>
+  <p class="lien">Pas encore de compte ? <a routerLink="/inscription">Créer un compte</a></p>
 </mat-card>`,
     styles: [`
-.carte-auth { max-width: 420px; margin: 40px auto; padding: 24px; display: flex; flex-direction: column; }
-.carte-auth form { display: flex; flex-direction: column; gap: 8px; }
-.erreur { color: #c62828; margin: 4px 0; }
-.lien { margin-top: 12px; }
+.carte-auth { max-width: 400px; margin: 48px auto; padding: 32px; }
+.carte-auth h1 { font-size: 1.6rem; margin-bottom: 4px; }
+.sous-titre { color: var(--texte-doux); margin: 0 0 22px; }
+.carte-auth form { display: flex; flex-direction: column; gap: 6px; }
+.carte-auth button { margin-top: 10px; height: 44px; }
+.erreur { color: #b42318; background: #fef3f2; border: 1px solid #fecaca; padding: 9px 12px; border-radius: 8px; font-size: .9rem; margin: 4px 0; }
+.lien { margin-top: 18px; color: var(--texte-doux); font-size: .9rem; }
 `],
 })
 export class Connexion

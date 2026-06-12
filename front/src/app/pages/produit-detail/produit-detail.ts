@@ -16,32 +16,33 @@ import { Produit } from '../../core/modeles';
 @if (produit(); as p)
 {
   <mat-card class="detail">
+    <span class="categorie">{{ p.categorie }}</span>
     <h1>{{ p.nom }}</h1>
-    <p class="categorie">{{ p.categorie }}</p>
-    <p class="description">{{ p.description }}</p>
     <p class="prix">{{ p.prix }} €</p>
+    <p class="description">{{ p.description || 'Aucune description disponible.' }}</p>
     @if (quantiteStock() !== null)
     {
       @if (quantiteStock()! > 0)
       {
-        <p class="stock">En stock : {{ quantiteStock() }}</p>
+        <p class="stock">En stock — {{ quantiteStock() }} disponible(s)</p>
       }
       @else
       {
         <p class="rupture">Rupture de stock</p>
       }
     }
-    <button mat-raised-button color="primary" (click)="ajouter(p)">
-      <mat-icon>add_shopping_cart</mat-icon> Ajouter au panier
-    </button>
+    <button mat-flat-button color="primary" (click)="ajouter(p)">Ajouter au panier</button>
   </mat-card>
 }`,
     styles: [`
-.detail { max-width: 600px; margin: 24px auto; padding: 24px; }
-.categorie { opacity: .7; }
-.prix { font-weight: 700; font-size: 1.4rem; }
-.stock { color: #2e7d32; }
-.rupture { color: #c62828; }
+.detail { max-width: 640px; margin: 8px auto; padding: 32px; }
+.categorie { font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: var(--texte-doux); font-weight: 700; }
+.detail h1 { font-size: 1.9rem; margin: 8px 0; }
+.prix { font-weight: 800; font-size: 1.8rem; margin: 8px 0; }
+.description { color: #374151; margin: 16px 0; line-height: 1.6; }
+.stock { color: #027a48; font-weight: 600; }
+.rupture { color: #b42318; font-weight: 600; }
+.detail button { margin-top: 18px; height: 46px; padding: 0 30px; }
 `],
 })
 export class ProduitDetail implements OnInit

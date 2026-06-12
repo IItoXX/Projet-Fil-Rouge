@@ -15,7 +15,10 @@ import { CommandesService } from '../../core/commandes.service';
 <h1>Mon panier</h1>
 @if (panierService.articles().length === 0)
 {
-  <p>Votre panier est vide. <a routerLink="/catalogue">Voir le catalogue</a></p>
+  <mat-card class="vide">
+    <p>Votre panier est vide.</p>
+    <a mat-flat-button color="primary" routerLink="/catalogue">Parcourir le catalogue</a>
+  </mat-card>
 }
 @else
 {
@@ -26,12 +29,13 @@ import { CommandesService } from '../../core/commandes.service';
       <span class="pu">{{ article.produit.prix }} €</span>
       <input type="number" min="1" [ngModel]="article.quantite" (ngModelChange)="changer(article.produit._id, $event)" class="qte">
       <span class="sous-total">{{ article.produit.prix * article.quantite }} €</span>
-      <button mat-icon-button color="warn" (click)="retirer(article.produit._id)"><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button (click)="retirer(article.produit._id)"><mat-icon>close</mat-icon></button>
     </mat-card>
   }
   <div class="pied">
-    <span class="total">Total : {{ panierService.total() }} €</span>
-    <button mat-raised-button color="primary" (click)="commander()">Commander</button>
+    <span class="total-label">Total</span>
+    <span class="total">{{ panierService.total() }} €</span>
+    <button mat-flat-button color="primary" (click)="commander()">Valider la commande</button>
   </div>
   @if (erreur())
   {
@@ -39,13 +43,19 @@ import { CommandesService } from '../../core/commandes.service';
   }
 }`,
     styles: [`
-.ligne { display: flex; align-items: center; gap: 16px; padding: 12px 16px; margin-bottom: 8px; }
+h1 { margin-bottom: 20px; }
+.vide { padding: 40px; text-align: center; }
+.vide p { color: var(--texte-doux); margin-bottom: 16px; }
+.ligne { display: flex; align-items: center; gap: 16px; padding: 14px 18px; margin-bottom: 10px; }
 .ligne .nom { flex: 1 1 auto; font-weight: 600; }
-.qte { width: 64px; }
-.sous-total { width: 80px; text-align: right; font-weight: 600; }
-.pied { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
-.total { font-size: 1.3rem; font-weight: 700; }
-.erreur { color: #c62828; margin-top: 12px; }
+.ligne .pu { color: var(--texte-doux); width: 70px; }
+.qte { width: 64px; padding: 7px 8px; border: 1px solid var(--bordure); border-radius: 8px; font: inherit; }
+.sous-total { width: 90px; text-align: right; font-weight: 700; }
+.pied { display: flex; align-items: center; gap: 20px; justify-content: flex-end; margin-top: 18px; padding: 18px; background: var(--surface); border: 1px solid var(--bordure); border-radius: 12px; }
+.total-label { color: var(--texte-doux); }
+.total { font-size: 1.4rem; font-weight: 800; margin-right: 12px; }
+.pied button { height: 44px; padding: 0 28px; }
+.erreur { color: #b42318; background: #fef3f2; border: 1px solid #fecaca; padding: 10px 14px; border-radius: 8px; margin-top: 14px; }
 `],
 })
 export class Panier
