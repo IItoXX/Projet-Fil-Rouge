@@ -120,6 +120,27 @@ services:
     networks:
       - flapazon-net
 
+  gateway:
+    build: ./backend/gateway
+    container_name: flapazon-gateway
+    restart: unless-stopped
+    depends_on:
+      - auth-service
+      - products-service
+      - stocks-service
+      - orders-service
+    environment:
+      GATEWAY_PORT: 3000
+      FRONTEND_URL: ${FRONTEND_URL}
+      AUTH_URL: http://auth-service:3001
+      PRODUCTS_URL: http://products-service:3002
+      STOCKS_URL: http://stocks-service:3003
+      ORDERS_URL: http://orders-service:3004
+    ports:
+      - "${GATEWAY_PORT}:3000"
+    networks:
+      - flapazon-net
+
 volumes:
   postgres-data:
   mongo-data:
