@@ -76,6 +76,27 @@ services:
     networks:
       - flapazon-net
 
+  stocks-service:
+    build: ./backend/stocks-service
+    container_name: flapazon-stocks
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      STOCKS_PORT: 3003
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: flapazon_stocks
+      JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_TOKEN: ${INTERNAL_TOKEN}
+    ports:
+      - "${STOCKS_PORT}:3003"
+    networks:
+      - flapazon-net
+
 volumes:
   postgres-data:
   mongo-data:
